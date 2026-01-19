@@ -1,0 +1,57 @@
+.hero {
+  text-align: center;
+  padding: 70px 20px 40px;
+}
+
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 40px;
+  font-weight: 700;
+}
+
+.search-box {
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 15px 25px;
+  border-radius: 50px;
+  box-shadow: 0 2px 50px #D8BB68;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.field label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.field input,
+.field select {
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-btn {
+  background-color: #D8BB68;
+  color: white;
+  border: none;
+  padding: 14px 26px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.car-image {
+  margin-top: 60px;
+  max-width: 900px;
+  width: 100%;
+}
