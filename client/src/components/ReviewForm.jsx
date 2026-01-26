@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./ReviewForm.css";
+import API from "../services/api";
 
 export default function ReviewForm({ onAdd }) {
   const [form, setForm] = useState({
@@ -21,18 +22,9 @@ export default function ReviewForm({ onAdd }) {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/reviews", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form)
-      });
+      const res = await API.post("/api/reviews", form);
 
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.message);
-
-      onAdd(data);   // show instantly
-
+      onAdd(res.data);
       alert("Review submitted successfully!");
 
       setForm({
@@ -42,10 +34,8 @@ export default function ReviewForm({ onAdd }) {
         rating: 5,
         text: ""
       });
-
     } catch (err) {
       alert("Failed to submit review");
-      console.error(err);
     }
   };
 

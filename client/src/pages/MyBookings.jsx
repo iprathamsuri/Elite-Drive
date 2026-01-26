@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./MyBooking.css";
+import API from "../services/api";
 
 export default function MyBookings() {
   const [bookings, setBookings] = useState([]);
@@ -8,31 +9,42 @@ export default function MyBookings() {
   useEffect(() => {
     if (!user) return;
 
-    fetch(`http://localhost:5000/api/bookings/${user.email}`)
-      .then(res => res.json())
-      .then(data => setBookings(data));
+    const fetchBookings = async () => {
+      try {
+        const res = await API.get(`/api/bookings/${user.email}`);
+        setBookings(res.data);
+      } catch (err) {
+        alert("Failed to load bookings");
+      }
+    };
+
+    fetchBookings();
   }, [user]);
 
   const handleCancel = async (id) => {
     if (!window.confirm("Are you sure you want to cancel this booking?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/bookings/${id}`, {
-        method: "DELETE",
-      });
+      await API.delete(`/api/bookings/${id}`);
 
-      if (!res.ok) throw new Error("Failed to cancel booking");
+      setBookings(prev =>
+        prev.filter(b => b._id !== id)
+      );
 
-      setBookings(bookings.filter(b => b._id !== id));
       alert("Booking cancelled successfully!");
-
     } catch (err) {
-      alert(err.message);
+      alert(
+        err.response?.data?.message || "Failed to cancel booking"
+      );
     }
   };
 
   if (!user) {
-    return <h2 style={{ padding: "120px", textAlign: "center" }}>Please login to view bookings</h2>;
+    return (
+      <h2 style={{ padding: "120px", textAlign: "center" }}>
+        Please login to view bookings
+      </h2>
+    );
   }
 
   return (
@@ -43,9 +55,8 @@ export default function MyBookings() {
         <p className="no-bookings">No bookings yet</p>
       ) : (
         <div className="bookings-grid">
-          {bookings.map(b => (
+          {bookings.map((b) => (
             <div className="booking-card" key={b._id}>
-
               <div className="booking-header">
                 <h3>{b.carName}</h3>
                 <span className="booking-status">Active</span>
@@ -57,10 +68,12 @@ export default function MyBookings() {
                 <p>📅 {b.pickupDate} → {b.returnDate}</p>
               </div>
 
-              <button className="cancel-btn" onClick={() => handleCancel(b._id)}>
+              <button
+                className="cancel-btn"
+                onClick={() => handleCancel(b._id)}
+              >
                 Cancel Booking
               </button>
-            
             </div>
           ))}
         </div>

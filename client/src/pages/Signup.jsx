@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
+import API from "../services/api";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -19,22 +20,20 @@ export default function Signup() {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:5000/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+      await API.post("/api/auth/signup", {
+        name,
+        email,
+        password,
       });
-
-      if (!res.ok) {
-        const msg = await res.text();
-        throw new Error(msg);
-      }
 
       alert("Account created successfully!");
       navigate("/login");
 
     } catch (error) {
-      alert("Signup failed: " + error.message);
+      alert(
+        "Signup failed: " +
+        (error.response?.data?.message || error.message)
+      );
     } finally {
       setLoading(false);
     }

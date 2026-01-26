@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
 import CarCard from "./CarCard";
 import "./CarList.css";
+import API from "../services/api";
 
 export default function CarList() {
   const [cars, setCars] = useState([]);
   const [sort, setSort] = useState("price-low");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/cars")
-      .then(res => res.json())
-      .then(data => setCars(data));
+    const fetchCars = async () => {
+      try {
+        const res = await API.get("/api/cars");
+        setCars(res.data);
+      } catch (err) {
+        console.error(err);
+        alert("Failed to load cars");
+      }
+    };
+
+    fetchCars();
   }, []);
 
   const sortedCars = [...cars].sort((a, b) => {
@@ -21,8 +30,6 @@ export default function CarList() {
 
   return (
     <section className="featured-sectionn">
-
-      {/* HEADER */}
       <div className="cars-header">
         <div>
           <h2>Featured Vehicles</h2>
@@ -40,13 +47,11 @@ export default function CarList() {
         </select>
       </div>
 
-      {/* GRID */}
       <div className="car-list-grid">
         {sortedCars.map((car) => (
           <CarCard key={car._id} car={car} />
         ))}
       </div>
-
     </section>
   );
 }

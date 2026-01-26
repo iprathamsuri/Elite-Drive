@@ -2,19 +2,18 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import CarCard from "../components/CarCard";
 import "./AvailableCars.css";
+import API from "../services/api";
 
 export default function AvailableCars() {
   const [cars, setCars] = useState([]);
   const [sort, setSort] = useState("price-low");
-
-  // 🔍 Read search query from URL
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/cars")
-      .then(res => res.json())
-      .then(data => setCars(data));
+    API.get("/api/cars")
+      .then(res => setCars(res.data))
+      .catch(() => alert("Failed to load cars"));
   }, []);
 
   // 🔃 Sort cars

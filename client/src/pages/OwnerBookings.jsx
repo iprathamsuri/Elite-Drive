@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./OwnerBookings.css";
+import API from "../services/api";
 
 export default function OwnerBookings() {
   const [bookings, setBookings] = useState([]);
@@ -8,9 +9,8 @@ export default function OwnerBookings() {
   useEffect(() => {
     if (!user) return;
 
-    fetch(`http://localhost:5000/api/bookings/owner/${user.email}`)
-      .then(res => res.json())
-      .then(data => setBookings(data));
+    API.get(`/api/bookings/owner/${user.email}`)
+      .then(res => setBookings(res.data));
   }, [user]);
 
   if (!user) {

@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./CarCard.css";
+import API from "../services/api";
 
 const CarCard = ({ car }) => {
   const navigate = useNavigate();
@@ -17,25 +18,23 @@ const CarCard = ({ car }) => {
     if (!window.confirm("Are you sure you want to delete this car?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/cars/${car._id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userEmail: user.email,   // 🔐 send owner email
-        }),
+      await API.delete(`/api/cars/${car._id}`, {
+        data: {
+          userEmail: user.email, // 🔐 send owner email
+        },
       });
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.message || "Failed to delete car");
 
       alert("Car deleted successfully!");
       window.location.reload();
 
     } catch (err) {
-      alert("Error: " + err.message);
+      alert(
+        "Error: " +
+        (err.response?.data?.message || err.message)
+      );
     }
   };
+
 
   // ✏ Edit Car (only owner)
   const handleEdit = (e) => {

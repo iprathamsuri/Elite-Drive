@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./Auth.css";
+import API from "../services/api";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -18,25 +19,21 @@ export default function Login() {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+      const res = await API.post("/api/auth/login", {
+        email,
+        password,
       });
 
-      if (!res.ok) {
-        const msg = await res.text();
-        throw new Error(msg);
-      }
-
-      const user = await res.json();
-
-      localStorage.setItem("user", JSON.stringify(user));
+      // backend should return user object
+      localStorage.setItem("user", JSON.stringify(res.data));
 
       navigate("/");
 
     } catch (error) {
-      alert("Login failed: " + error.message);
+      alert(
+        "Login failed: " +
+        (error.response?.data?.message || error.message)
+      );
     } finally {
       setLoading(false);
     }

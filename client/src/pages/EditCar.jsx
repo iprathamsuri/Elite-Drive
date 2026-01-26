@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./AddCar.css";
+import API from "../services/api";
 
 export default function EditCar() {
   const { id } = useParams();
@@ -22,10 +23,10 @@ export default function EditCar() {
   const [loading, setLoading] = useState(false);
 
   // Load car data
+
   useEffect(() => {
-    fetch(`http://localhost:5000/api/cars/${id}`)
-      .then(res => res.json())
-      .then(data => setForm(data));
+    API.get(`/api/cars/${id}`)
+      .then(res => setForm(res.data));
   }, [id]);
 
   const handleChange = (e) => {
@@ -47,28 +48,23 @@ export default function EditCar() {
     try {
       setLoading(true);
 
-      const res = await fetch(`http://localhost:5000/api/cars/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          userEmail: user.email
-        })
+      await API.put(`/api/cars/${id}`, {
+        ...form,
+        userEmail: user.email,
       });
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.message);
 
       alert("Car updated successfully!");
       navigate("/cars");
 
     } catch (err) {
-      alert(err.message);
+      alert(
+        err.response?.data?.message || err.message
+      );
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="addcar-container">

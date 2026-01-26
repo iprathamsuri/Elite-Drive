@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./CarDetails.css";
+import API from "../services/api";
 
 export default function CarDetails() {
   const { id } = useParams();
@@ -11,45 +12,32 @@ export default function CarDetails() {
   const [returnDate, setReturnDate] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/cars/${id}`)
-      .then(res => res.json())
-      .then(data => setCar(data));
+    API.get(`/api/cars/${id}`)
+      .then(res => setCar(res.data));
   }, [id]);
-
-  if (!car) return <h2>Loading...</h2>;
 
   const handleBooking = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
-
     if (!user) {
       alert("Please login to book a car");
       navigate("/login");
       return;
     }
 
-    if (!pickupDate || !returnDate) {
-      alert("Please select dates");
-      return;
-    }
-
-    await fetch("http://localhost:5000/api/bookings", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    userEmail: user.email,
-    ownerEmail: car.ownerEmail,   // 🔥 send owner email
-    carId: car._id,
-    carName: car.name,
-    pricePerDay: car.price,
-    pickupDate,
-    returnDate,
-    location: car.location,
-  }),
-});
-
+    await API.post("/api/bookings", {
+      userEmail: user.email,
+      ownerEmail: car.ownerEmail,
+      carId: car._id,
+      carName: car.name,
+      pricePerDay: car.price,
+      pickupDate,
+      returnDate,
+      location: car.location,
+    });
 
     navigate("/bookings");
   };
+
 
   return (
     <div className="car-details-page">

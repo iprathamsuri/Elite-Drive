@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddCar.css";
+import API from "../services/api";
+
+
 
 export default function AddCar() {
   const navigate = useNavigate();
@@ -51,20 +54,10 @@ export default function AddCar() {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:5000/api/cars", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          ownerEmail: user.email   // 🔐 attach owner
-        }),
+      const res = await API.post("/api/cars", {
+        ...form,
+        ownerEmail: user.email, // 🔐 attach owner
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to add car");
-      }
 
       alert("Car added successfully!");
 
@@ -83,11 +76,15 @@ export default function AddCar() {
       navigate("/cars");
 
     } catch (err) {
-      alert("Error: " + err.message);
+      alert(
+        "Error: " +
+        (err.response?.data?.message || err.message)
+      );
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="addcar-container">
