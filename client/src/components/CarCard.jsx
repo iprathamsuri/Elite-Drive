@@ -10,6 +10,7 @@ const CarCard = ({ car }) => {
 
 
   const isOwner = user && car.ownerEmail === user.email;
+  console.log("Car ID:", car._id);
 
   // 🗑 Delete Car (only owner)
   const handleDelete = async (e) => {

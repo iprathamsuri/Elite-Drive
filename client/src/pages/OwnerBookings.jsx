@@ -9,9 +9,18 @@ export default function OwnerBookings() {
   useEffect(() => {
     if (!user) return;
 
-    API.get(`/api/bookings/owner/${user.email}`)
-      .then(res => setBookings(res.data));
+    const fetchOwnerBookings = async () => {
+      try {
+        const res = await API.get(`/api/bookings/owner/${user.email}`);
+        setBookings(res.data);
+      } catch (err) {
+        alert("Failed to load owner bookings");
+      }
+    };
+
+    fetchOwnerBookings();
   }, [user]);
+
 
   if (!user) {
     return <h2 style={{ padding: "120px", textAlign: "center" }}>

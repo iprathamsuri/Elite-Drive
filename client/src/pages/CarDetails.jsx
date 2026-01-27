@@ -13,14 +13,30 @@ export default function CarDetails() {
 
   useEffect(() => {
     API.get(`/api/cars/${id}`)
-      .then(res => setCar(res.data));
+      .then(res => setCar(res.data))
+      .catch(() => alert("Failed to load car"));
   }, [id]);
+
+  // ✅ FIX: prevent crash
+  if (!car) {
+    return (
+      <h2 style={{ padding: "120px", textAlign: "center" }}>
+        Loading car details...
+      </h2>
+    );
+  }
 
   const handleBooking = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
+
     if (!user) {
       alert("Please login to book a car");
       navigate("/login");
+      return;
+    }
+
+    if (!pickupDate || !returnDate) {
+      alert("Please select dates");
       return;
     }
 
@@ -37,7 +53,6 @@ export default function CarDetails() {
 
     navigate("/bookings");
   };
-
 
   return (
     <div className="car-details-page">

@@ -25,9 +25,22 @@ export default function EditCar() {
   // Load car data
 
   useEffect(() => {
-    API.get(`/api/cars/${id}`)
-      .then(res => setForm(res.data));
-  }, [id]);
+    const fetchCar = async () => {
+      try {
+        setLoading(true);
+        const res = await API.get(`/api/cars/${id}`);
+        setForm(res.data.car || res.data);
+      } catch {
+        alert("Failed to load car details");
+        navigate("/cars");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCar();
+  }, [id, navigate]);
+
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -65,6 +78,13 @@ export default function EditCar() {
     }
   };
 
+  if (loading) {
+    return (
+      <h2 style={{ padding: "120px", textAlign: "center" }}>
+        Loading car details...
+      </h2>
+    );
+  }
 
   return (
     <div className="addcar-container">
