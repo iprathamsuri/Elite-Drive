@@ -1,0 +1,179 @@
+/* ===============================
+   CAR CARD
+================================ */
+
+.car-card {
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.car-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+
+/* ===============================
+   IMAGE SECTION
+================================ */
+
+.car-image-container {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+}
+
+.car-Image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.car-card:hover .car-Image {
+  transform: scale(1.06);
+}
+
+.car-available {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #D8BB68;
+  color: #000;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+.car-price {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+
+/* ===============================
+   INFO SECTION
+================================ */
+
+.car-info {
+  padding: 16px;
+}
+
+.car-type-year {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+
+/* ===============================
+   TITLE ROW
+================================ */
+
+.car-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.car-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+  flex: 1;
+}
+
+
+/* ===============================
+   DETAILS
+================================ */
+
+.car-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.detail-item .icon {
+  margin-right: 6px;
+  font-size: 15px;
+}
+
+
+/* ===============================
+   OWNER ACTION BUTTONS (INLINE)
+================================ */
+
+.admin-actions-inline {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 6px 14px;
+  border-radius: 18px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+
+/* EDIT BUTTON */
+.edit-btn {
+  background: linear-gradient(135deg, #D8BB68, #ffe08a);
+  color: #000;
+  box-shadow: 0 6px 16px rgba(216, 187, 104, 0.45);
+}
+
+.edit-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 26px rgba(216, 187, 104, 0.6);
+}
+
+
+/* DELETE BUTTON */
+.delete-btn {
+  background: linear-gradient(135deg, #e63946, #ff6b6b);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(230, 57, 70, 0.45);
+}
+
+.delete-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 26px rgba(230, 57, 70, 0.6);
+}
+
+
+/* CLICK EFFECT */
+.edit-btn:active,
+.delete-btn:active {
+  transform: scale(0.95);
+}
