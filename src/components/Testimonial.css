@@ -1,0 +1,21 @@
+.testimonial-section {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.testimonial-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.testimonial-section .subtitle {
+  color: #666;
+  margin-bottom: 50px;
+}
+
+.testimonials {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}

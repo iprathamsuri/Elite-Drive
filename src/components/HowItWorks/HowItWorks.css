@@ -1,0 +1,94 @@
+.howitworks {
+  background: #fafafa;
+  padding: 80px 60px;
+  border-radius: 24px;
+}
+
+.how-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 50px;
+}
+
+/* STEPS */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.step-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-6px);
+}
+
+.step-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.step-card p {
+  margin-top: 16px;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+/* FEATURES */
+.features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  border-top: 1px solid #ddd;
+  padding-top: 40px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.feature span {
+  font-size: 22px;
+}
+
+.feature h4 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.feature p {
+  font-size: 14px;
+  color: #666;
+  margin: 2px 0 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .steps-grid,
+  .features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .howitworks {
+    padding: 50px 20px;
+  }
+
+  .steps-grid,
+  .features {
+    grid-template-columns: 1fr;
+  }
+}
