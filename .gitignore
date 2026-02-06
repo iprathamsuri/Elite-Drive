@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+# Logs
+logs
+*.log
+=======
 # Environment files
 server/.env
 .env.local
@@ -16,10 +21,35 @@ client/dist/
 client/build/
 
 # Logs
+>>>>>>> e254e5674c707ad6f678c4174ff77df95f38808b
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+<<<<<<< HEAD
+lerna-debug.log*
+
+
+.env
+build
+
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+=======
 logs/
 *.log
 
@@ -51,3 +81,4 @@ dump/
 
 # Misc
 *.env
+>>>>>>> e254e5674c707ad6f678c4174ff77df95f38808b
