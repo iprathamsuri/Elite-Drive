@@ -1,7 +1,6 @@
 import axios from "axios";
-
-const API = axios.create({
+const api = axios.create({
   baseURL: "https://elite-drive.onrender.com",
 });
 
-export default API;
+export default api;
